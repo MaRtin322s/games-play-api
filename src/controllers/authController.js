@@ -1,9 +1,27 @@
 const router = require('express').Router();
 const authService = require('../services/authService');
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     const { email, password } = req.body;
-    
+    try {
+        if (email && password) {
+            const user = await authService.loginUser({ email, password });
+            if (typeof user == 'object') {
+                const token = await authService.generateToken(user);
+                res.json({
+                    _id: user._id,
+                    email,
+                    accessToken: token
+                });
+            }
+        } else {
+            throw {
+                message: 'Invalid email or password'
+            }
+        }
+    } catch (err) {
+        res.json(err.message);
+    }
 });
 
 router.post('/register', async (req, res) => {
