@@ -26,8 +26,7 @@ const gameSchema = new mongoose.Schema({
         ref: 'User'
     },
     comments: [{
-        type: mongoose.Types.ObjectId,
-        ref: 'User'
+        type: Object
     }]
 },
 { timestamps: true });
