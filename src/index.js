@@ -4,6 +4,7 @@ const { initViewEngine } = require('../config/hbs');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const router = require('./router');
+const { auth } = require('./middlewares/middleware');
 const app = express();
 const port = process.env.PORT || 3030;
 
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
+app.use(auth);
 app.use(router);
 
 initialDatabase()
